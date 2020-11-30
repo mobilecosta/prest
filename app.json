@@ -1,7 +1,0 @@
-{
-    "name": "Prest on Heroku",
-    "description": "A fork of the PREST Golang application, tweaked to launch on Heroku",
-    "repository": "https://github.com/ibigfoot/prest",
-    "logo": "https://node-js-sample.herokuapp.com/node.png",
-    "keywords": ["golang", "rest", "prest"]
-  }

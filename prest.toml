@@ -1,6 +1,4 @@
-[pg]
-user = "ccetffuwbephog"
-database = "d5brd790ullpt8"
+
 
 [jwt]
-default = false
+default=false

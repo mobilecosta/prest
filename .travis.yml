@@ -1,0 +1,40 @@
+dist: trusty
+sudo: required
+addons:
+  postgresql: "9.6"
+services:
+  - docker
+language: go
+os:
+  - linux
+go:
+  - "1.10.x"
+  - "1.9.x"
+  - master
+matrix:
+  allow_failures:
+    - go: master
+  fast_finish: true
+env:
+  - PREST_PG_USER=postgres PREST_PG_DATABASE=prest PREST_PG_PORT=5432 PREST_CONF=$TRAVIS_BUILD_DIR/testdata/prest.toml
+install: true
+before_script:
+  - docker login -u="$DOCKER_LOGIN" -p="$DOCKER_PASSWORD"
+  - sh testdata/schema.sh
+script:
+  - sh testdata/migrations_test.sh
+  - env GO111MODULE=on go test -race ./...
+
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux
+    go: "1.10.x"
+
+notifications:
+    webhooks:
+        urls:
+            - https://webhooks.gitter.im/e/b7314cbdd840e64940fb
